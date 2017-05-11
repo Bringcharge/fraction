@@ -111,7 +111,7 @@ struct Fraction
 
 	long long fenzi;
 	long long fenmu;
-	void yuefen()
+	void yuefen()											//拼音还是坏习惯啊……
 	{
 		reduction(fenzi, fenmu);
 	}
@@ -139,5 +139,22 @@ struct Fraction
 		addition(fenzi, fenmu, rhs.fenzi, rhs.fenmu, ans.fenzi, ans.fenmu);
 		return ans;
 	}
-	Fraction(){ fenzi = 0; fenmu = 1; }
+	Fraction(){ fenzi = 0; fenmu = 1; }				//构造函数
+	Fraction(long long a, long long b)				//b理论上不能为0,构造函数的另一个版本
+	{
+		fenzi = a; fenmu = b;
+		zeromark(fenzi, fenmu);
+		reduction(fenzi, fenmu);
+	}
+	Fraction(double k)								//强制类型转换
+	{
+		fenmu = 1;									//初始化分母
+		while (k < 1e15 && k>-1e15)
+		{
+			fenmu *= 10;
+			k *= 10;
+		}
+		fenzi = k;
+		reduction(fenzi, fenmu);					//直接约分
+	}
 };
